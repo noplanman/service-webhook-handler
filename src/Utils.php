@@ -24,4 +24,40 @@ class Utils
 
         return ($ip & $mask) === $subnet;
     }
+
+    /**
+     * Get the contents of a file and cache it.
+     *
+     * @param string $url
+     * @param string $file
+     * @param int    $cache_time
+     *
+     * @return string
+     */
+    public static function fetchCacheableFile($url, $file, $cache_time = 60): string
+    {
+        if (file_exists($file)) {
+            if (filemtime($file) + $cache_time > time()) {
+                $url = $file;
+            } else {
+                unlink($file);
+            }
+        }
+
+        if ($url === $file) {
+            $contents = (string) file_get_contents($url);
+        } else {
+            $ch = curl_init($url);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            curl_setopt($ch, CURLOPT_USERAGENT, 'PHP-Service-Webhook-Handler');
+            $contents = curl_exec($ch);
+            curl_close($ch);
+        }
+
+        if ($contents && is_writable(dirname($file))) {
+            file_put_contents($file, $contents);
+        }
+
+        return $contents;
+    }
 }

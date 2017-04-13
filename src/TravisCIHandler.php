@@ -27,6 +27,9 @@ class TravisCIHandler extends WebhookHandler
         return $this->repo_slug;
     }
 
+    /**
+     * @inheritdoc
+     */
     protected function getVitalHeaders(): array
     {
         return [
@@ -36,16 +39,15 @@ class TravisCIHandler extends WebhookHandler
     }
 
     /**
-     * Validate payload with given signature.
-     *
-     * @param string $signature As passed in the HTTP_SIGNATURE header.
-     * @param string $payload
-     *
-     * @return bool
+     * @inheritdoc
      */
     protected function validateSignature(string $signature, string $payload): bool
     {
-        return 1 === openssl_verify($payload, base64_decode($signature), $this->getTravisPubKey());
+        if ($pubkey = $this->getTravisPubKey()) {
+            return 1 === openssl_verify($payload, base64_decode($signature), $pubkey);
+        }
+
+        return false;
     }
 
     /**
@@ -73,30 +75,11 @@ class TravisCIHandler extends WebhookHandler
             $api_host = self::API_HOST;
         }
 
-        $api_config_file        = $api_host . '/config';
-        $api_config_file_cached = '';
-
-        if ($cache_dir = getenv('CACHE_DIR')) {
-            $api_config_file_cached = $cache_dir . '/travis-ci-api-config.json';
-
-            if (file_exists($api_config_file_cached)) {
-                if (filemtime($api_config_file_cached) + self::API_CONFIG_CACHE_TIME > time()) {
-                    $api_config_file = $api_config_file_cached;
-                } else {
-                    unlink($api_config_file_cached);
-                }
-            }
-        }
-
-        if ($api_config_file === $api_config_file_cached) {
-            $api_config = (string) file_get_contents($api_config_file);
-        } else {
-            $ch = curl_init($api_config_file);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-            curl_setopt($ch, CURLOPT_USERAGENT, 'PHP-Service-Webhook-Handler');
-            $api_config = curl_exec($ch);
-            curl_close($ch);
-        }
+        $api_config = Utils::fetchCacheableFile(
+            $api_host . '/config',
+            __DIR__ . '/../../cache/travis-ci-api-config.json',
+            self::API_CONFIG_CACHE_TIME
+        );
 
         return json_decode($api_config, true) ?: [];
     }

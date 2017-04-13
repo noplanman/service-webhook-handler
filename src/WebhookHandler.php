@@ -32,9 +32,9 @@ abstract class WebhookHandler
     abstract protected function getVitalHeaders(): array;
 
     /**
-     * Validate payload with given signature.
+     * Validate payload with given signature, normally set via HTTP header.
      *
-     * @param string $signature As passed in the HTTP_X_HUB_SIGNATURE header.
+     * @param string $signature
      * @param string $payload
      *
      * @return bool

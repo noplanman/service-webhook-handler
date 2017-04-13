@@ -109,6 +109,9 @@ class GitHubHandler extends WebhookHandler
         return $this->secret;
     }
 
+    /**
+     * @inheritdoc
+     */
     protected function getVitalHeaders(): array
     {
         return [
@@ -148,34 +151,11 @@ class GitHubHandler extends WebhookHandler
             $api_host = self::API_HOST;
         }
 
-        $api_meta_file        = $api_host . '/meta';
-        $api_meta_file_cached = '';
-
-        if ($cache_dir = getenv('CACHE_DIR')) {
-            $api_meta_file_cached = $cache_dir . '/github-api-meta.json';
-
-            if (file_exists($api_meta_file_cached)) {
-                if (filemtime($api_meta_file_cached) + self::API_META_CACHE_TIME > time()) {
-                    $api_meta_file = $api_meta_file_cached;
-                } else {
-                    unlink($api_meta_file_cached);
-                }
-            }
-        }
-
-        if ($api_meta_file === $api_meta_file_cached) {
-            $api_meta = (string) file_get_contents($api_meta_file);
-        } else {
-            $ch = curl_init($api_meta_file);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-            curl_setopt($ch, CURLOPT_USERAGENT, 'PHP-Service-Webhook-Handler');
-            $api_meta = curl_exec($ch);
-            curl_close($ch);
-        }
-
-        if ($api_meta_file_cached && $api_meta) {
-            file_put_contents($api_meta_file_cached, $api_meta);
-        }
+        $api_meta = Utils::fetchCacheableFile(
+            $api_host . '/meta',
+            __DIR__ . '/../../cache/github-api-meta.json',
+            self::API_META_CACHE_TIME
+        );
 
         return json_decode($api_meta, true) ?: [];
     }
