@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace NPM\ServiceWebhookHandler\Webhooks;
+namespace NPM\ServiceWebhookHandler\Webhooks\Handlers;
 
 abstract class WebhookHandler
 {

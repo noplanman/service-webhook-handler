@@ -1,6 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace NPM\ServiceWebhookHandler\Webhooks;
+namespace NPM\ServiceWebhookHandler\Webhooks\Handlers;
+
+use NPM\ServiceWebhookHandler\Webhooks\Utils;
 
 class TravisCIHandler extends WebhookHandler
 {
@@ -77,7 +79,7 @@ class TravisCIHandler extends WebhookHandler
 
         $api_config = Utils::fetchCacheableFile(
             $api_host . '/config',
-            __DIR__ . '/../../cache/travis-ci-api-config.json',
+            __DIR__ . '/../../../cache/travis-ci-api-config.json',
             self::API_CONFIG_CACHE_TIME
         );
 

@@ -1,6 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace NPM\ServiceWebhookHandler\Webhooks;
+namespace NPM\ServiceWebhookHandler\Webhooks\Handlers;
+
+use NPM\ServiceWebhookHandler\Webhooks\Utils;
 
 class GitHubHandler extends WebhookHandler
 {
@@ -153,7 +155,7 @@ class GitHubHandler extends WebhookHandler
 
         $api_meta = Utils::fetchCacheableFile(
             $api_host . '/meta',
-            __DIR__ . '/../../cache/github-api-meta.json',
+            __DIR__ . '/../../../cache/github-api-meta.json',
             self::API_META_CACHE_TIME
         );
 

@@ -46,12 +46,14 @@ class Utils
 
         if ($url === $file) {
             $contents = (string) file_get_contents($url);
-        } else {
+        } elseif (filter_var($url, FILTER_VALIDATE_URL)) {
             $ch = curl_init($url);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
             curl_setopt($ch, CURLOPT_USERAGENT, 'PHP-Service-Webhook-Handler');
             $contents = curl_exec($ch);
             curl_close($ch);
+        } else {
+            $contents = file_get_contents($url);
         }
 
         if ($contents && is_writable(dirname($file))) {
