@@ -77,7 +77,7 @@ class TravisCIHandler extends WebhookHandler
         $api_config_file_cached = '';
 
         if ($cache_dir = getenv('CACHE_DIR')) {
-            $api_config_file_cached = $cache_dir . '/travis-ci-api.pubkey';
+            $api_config_file_cached = $cache_dir . '/travis-ci-api-config.json';
 
             if (file_exists($api_config_file_cached)) {
                 if (filemtime($api_config_file_cached) + self::API_CONFIG_CACHE_TIME > time()) {
@@ -88,11 +88,16 @@ class TravisCIHandler extends WebhookHandler
             }
         }
 
-        $api_config = file_get_contents($api_config_file);
-        if ($api_config_file_cached && $api_config) {
-            file_put_contents($api_config_file_cached, $api_config);
+        if ($api_config_file === $api_config_file_cached) {
+            $api_config = (string) file_get_contents($api_config_file);
+        } else {
+            $ch = curl_init($api_config_file);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            curl_setopt($ch, CURLOPT_USERAGENT, 'PHP-Service-Webhook-Handler');
+            $api_config = curl_exec($ch);
+            curl_close($ch);
         }
 
-        return json_decode($api_config, true);
+        return json_decode($api_config, true) ?: [];
     }
 }

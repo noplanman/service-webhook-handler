@@ -59,6 +59,16 @@ abstract class WebhookHandler
     }
 
     /**
+     * Any extra validations.
+     *
+     * @return bool
+     */
+    protected function extraValidations(): bool
+    {
+        return true;
+    }
+
+    /**
      * Validate the payload.
      *
      * @param string $payload
@@ -67,7 +77,7 @@ abstract class WebhookHandler
      */
     public function validate(string $payload = ''): bool
     {
-        if (!$this->validateHeaders()) {
+        if (!$this->validateHeaders() || !$this->extraValidations()) {
             return false;
         }
 
