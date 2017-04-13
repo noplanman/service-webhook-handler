@@ -155,7 +155,7 @@ class GitHubHandler extends WebhookHandler
 
         $api_meta = Utils::fetchCacheableFile(
             $api_host . '/meta',
-            __DIR__ . '/../../../cache/github-api-meta.json',
+            'github-api-meta.json',
             self::API_META_CACHE_TIME
         );
 

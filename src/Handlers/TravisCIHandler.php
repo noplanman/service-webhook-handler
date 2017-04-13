@@ -79,7 +79,7 @@ class TravisCIHandler extends WebhookHandler
 
         $api_config = Utils::fetchCacheableFile(
             $api_host . '/config',
-            __DIR__ . '/../../../cache/travis-ci-api-config.json',
+            'travis-ci-api-config.json',
             self::API_CONFIG_CACHE_TIME
         );
 

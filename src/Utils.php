@@ -5,6 +5,11 @@ namespace NPM\ServiceWebhookHandler;
 class Utils
 {
     /**
+     * @var string
+     */
+    protected static $cache_dir = __DIR__ . '/../cache';
+
+    /**
      * Check if an IP lies within a CIDR range.
      *
      * @link http://stackoverflow.com/a/594134/124529
@@ -36,6 +41,7 @@ class Utils
      */
     public static function fetchCacheableFile($url, $file, $cache_time = 60): string
     {
+        $file = self::$cache_dir . '/' . $file;
         if (file_exists($file)) {
             if (filemtime($file) + $cache_time > time()) {
                 $url = $file;
