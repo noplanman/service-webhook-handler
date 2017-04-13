@@ -2,7 +2,7 @@
 
 namespace NPM\ServiceWebhookHandler\Webhooks;
 
-class TravisCI implements IWebhook
+class TravisCIHandler extends WebhookHandler
 {
     /**
      * @var string
@@ -15,22 +15,9 @@ class TravisCI implements IWebhook
     const API_CONFIG_CACHE_TIME = 60;
 
     /**
-     * @var array
-     */
-    private $data;
-
-    /**
      * @var string
      */
-    private $repo_slug;
-
-    /**
-     * @inheritdoc
-     */
-    public function getData(): array
-    {
-        return $this->data;
-    }
+    protected $repo_slug;
 
     /**
      * @return string
@@ -40,33 +27,12 @@ class TravisCI implements IWebhook
         return $this->repo_slug;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function validate(string $payload = ''): bool
+    protected function getVitalHeaders(): array
     {
-        $signature = @$_SERVER['HTTP_SIGNATURE'];
-        $repo_slug = @$_SERVER['HTTP_TRAVIS_REPO_SLUG'];
-
-        if (!isset($signature, $repo_slug)) {
-            return false;
-        }
-
-        $payload !== '' || $payload = (string) file_get_contents('php://input');
-
-        // Check if the payload is json or urlencoded.
-        if (strpos($payload, 'payload=') === 0) {
-            $payload = (string) substr(urldecode($payload), 8);
-        }
-
-        if (!$this->validateSignature($signature, $payload)) {
-            return false;
-        }
-
-        $this->data      = json_decode($payload, true);
-        $this->repo_slug = $repo_slug;
-
-        return true;
+        return [
+            'signature' => 'HTTP_SIGNATURE',
+            'repo_slug' => 'HTTP_TRAVIS_REPO_SLUG',
+        ];
     }
 
     /**
@@ -97,11 +63,17 @@ class TravisCI implements IWebhook
     /**
      * Get the Travis API config.
      *
+     * @param string $api_host
+     *
      * @return array
      */
-    protected function getTravisApiConfig(): array
+    protected function getTravisApiConfig(string $api_host = ''): array
     {
-        $api_config_file        = self::API_HOST . '/config';
+        if ($api_host === '') {
+            $api_host = self::API_HOST;
+        }
+
+        $api_config_file        = $api_host . '/config';
         $api_config_file_cached = '';
 
         if ($cache_dir = getenv('CACHE_DIR')) {
