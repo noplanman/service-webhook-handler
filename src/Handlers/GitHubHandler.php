@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace NPM\ServiceWebhookHandler\Webhooks\Handlers;
+namespace NPM\ServiceWebhookHandler\Handlers;
 
-use NPM\ServiceWebhookHandler\Webhooks\Utils;
+use NPM\ServiceWebhookHandler\Utils;
 
 class GitHubHandler extends WebhookHandler
 {
@@ -128,7 +128,7 @@ class GitHubHandler extends WebhookHandler
      */
     protected function validateSignature(string $signature, string $payload): bool
     {
-        [$algo, $real_signature] = explode('=', $signature);
+        list($algo, $real_signature) = explode('=', $signature);
 
         if ($algo !== 'sha1') {
             // see https://developer.github.com/webhooks/securing/

@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace NPM\ServiceWebhookHandler\Webhooks\Handlers;
+namespace NPM\ServiceWebhookHandler\Handlers;
 
-use NPM\ServiceWebhookHandler\Webhooks\Utils;
+use NPM\ServiceWebhookHandler\Utils;
 
 class TravisCIHandler extends WebhookHandler
 {

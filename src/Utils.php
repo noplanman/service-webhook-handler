@@ -1,6 +1,6 @@
 <?php
 
-namespace NPM\ServiceWebhookHandler\Webhooks;
+namespace NPM\ServiceWebhookHandler;
 
 class Utils
 {
@@ -16,7 +16,7 @@ class Utils
      */
     public static function cidrMatch($ip, $range): bool
     {
-        [$subnet, $bits] = explode('/', $range);
+        list($subnet, $bits) = explode('/', $range);
         $ip     = ip2long($ip);
         $subnet = ip2long($subnet);
         $mask   = -1 << (32 - $bits);
