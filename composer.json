@@ -1,0 +1,25 @@
+{
+    "name": "noplanman/service-webhook-handler",
+    "type": "library",
+    "description": "Library to handle Webhooks from various services.",
+    "keywords": ["services", "webhooks", "handler", "travis-ci", "github"],
+    "license": "MIT",
+    "homepage": "https://github.com/noplanman/service-webhook-handler",
+    "support": {
+        "issues": "https://github.com/noplanman/service-webhook-handler/issues",
+        "source": "https://github.com/noplanman/service-webhook-handler"
+    },
+    "authors": [
+        {
+            "name": "Armando Lüscher",
+            "email": "armando@noplanman.ch",
+            "homepage": "https://noplanman.ch",
+            "role": "Developer"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "NPM\\ServiceWebhookHandler\\": "src/"
+        }
+    }
+}
