@@ -1,6 +1,8 @@
 # service-webhook-handler
 PHP library to handle Webhooks from various services.
 
+Requires PHP 7.1+
+
 Very basic functionality provided so far for:
 - [GitHub][github-handler]
 - [Travis CI][travis-ci-handler]

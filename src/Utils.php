@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace NPM\ServiceWebhookHandler;
 
@@ -21,7 +21,7 @@ class Utils
      */
     public static function cidrMatch($ip, $range): bool
     {
-        list($subnet, $bits) = explode('/', $range);
+        [$subnet, $bits] = explode('/', $range);
         $ip     = ip2long($ip);
         $subnet = ip2long($subnet);
         $mask   = -1 << (32 - $bits);
@@ -62,7 +62,7 @@ class Utils
             $contents = file_get_contents($url);
         }
 
-        if ($contents && is_writable(dirname($file))) {
+        if ($contents && is_writable(\dirname($file))) {
             file_put_contents($file, $contents);
         }
 

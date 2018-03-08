@@ -9,12 +9,12 @@ class GitHubHandler extends WebhookHandler
     /**
      * @var string
      */
-    const API_HOST = 'https://api.github.com';
+    public const API_HOST = 'https://api.github.com';
 
     /**
      * @var int
      */
-    const API_META_CACHE_TIME = 60;
+    public const API_META_CACHE_TIME = 60;
 
     /**
      * @var string
@@ -128,7 +128,7 @@ class GitHubHandler extends WebhookHandler
      */
     protected function validateSignature(string $signature, string $payload): bool
     {
-        list($algo, $real_signature) = explode('=', $signature);
+        [$algo, $real_signature] = explode('=', $signature);
 
         if ($algo !== 'sha1') {
             // see https://developer.github.com/webhooks/securing/

@@ -9,12 +9,12 @@ class TravisCIHandler extends WebhookHandler
     /**
      * @var string
      */
-    const API_HOST = 'https://api.travis-ci.org';
+    public const API_HOST = 'https://api.travis-ci.org';
 
     /**
      * @var int
      */
-    const API_CONFIG_CACHE_TIME = 60;
+    public const API_CONFIG_CACHE_TIME = 60;
 
     /**
      * @var string
@@ -24,7 +24,7 @@ class TravisCIHandler extends WebhookHandler
     /**
      * @return string
      */
-    public function getRepoSlug()
+    public function getRepoSlug(): string
     {
         return $this->repo_slug;
     }
