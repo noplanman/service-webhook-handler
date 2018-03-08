@@ -1,10 +1,40 @@
-# service-webhook-handler
+# [Service Webhook Handler][github-swh]
+
+[![Minimum PHP Version][min-php-version-badge]][packagist-swh]
+[![Latest Stable Version][latest-version-badge]][packagist-swh]
+[![Total Downloads][total-downloads-badge]][packagist-swh]
+[![License][license-badge]][license]
+
 PHP library to handle Webhooks from various services.
 
-Requires PHP 7.1+
+## Installation
+
+Installation is pretty straightforward:
+
+### Require this package with [Composer][composer]
+
+Either run this command in your command line:
+
+```bash
+composer require noplanman/service-webhook-handler
+```
+
+**or**
+
+For existing Composer projects, edit your project's `composer.json` file to require `noplanman/service-webhook-handler`:
+
+```yaml
+"require": {
+    "noplanman/service-webhook-handler": "^0.2"
+}
+```
+and then run `composer update`
+
+## Usage
 
 Very basic functionality provided so far for:
-- [GitHub][github-handler]
+
+### [GitHub][github-handler]
 ```php
 use NPM\ServiceWebhookHandler\Handlers\GitHubHandler;
 
@@ -15,7 +45,7 @@ if ($handler->validate()) {
 }
 ```
 
-- [Travis CI][travis-ci-handler]
+### [Travis CI][travis-ci-handler]
 ```php
 use NPM\ServiceWebhookHandler\Handlers\TravisCIHandler;
 
@@ -26,7 +56,7 @@ if ($handler->validate()) {
 }
 ```
 
-- [Telegram Login][telegram-login-handler]
+### [Telegram Login][telegram-login-handler]
 ```php
 use NPM\ServiceWebhookHandler\Handlers\TelegramLoginHandler;
 
@@ -36,6 +66,16 @@ if ($handler->validate(json_encode($_GET))) {
     $data = $handler->getData();
 }
 ```
+
+[github-swh]: https://github.com/noplanman/service-webhook-handler "Service Webhook Handler on GitHub"
+[packagist-swh]: https://packagist.org/packages/noplanman/service-webhook-handler "Service Webhook Handler on Packagist"
+[license]: https://github.com/noplanman/service-webhook-handler/blob/master/LICENSE "Service Webhook Handler license"
+
+[latest-version-badge]: https://img.shields.io/packagist/v/noplanman/service-webhook-handler.svg
+[min-php-version-badge]: https://img.shields.io/packagist/php-v/noplanman/service-webhook-handler.svg
+[total-downloads-badge]: https://img.shields.io/packagist/dt/noplanman/service-webhook-handler.svg
+[license-badge]: https://img.shields.io/packagist/l/noplanman/service-webhook-handler.svg
+[composer]: https://getcomposer.org/ "Composer"
 
 [github-handler]: https://github.com/noplanman/service-webhook-handler/blob/master/src/Handlers/GitHubHandler.php
 [travis-ci-handler]: https://github.com/noplanman/service-webhook-handler/blob/master/src/Handlers/TravisCIHandler.php
