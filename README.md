@@ -34,7 +34,8 @@ and then run `composer update`
 
 Very basic functionality provided so far for:
 
-### [GitHub][github-handler]
+### GitHub
+[Docs][github-webhook-docs] - [`GitHubHandler.php`][github-handler-php]
 ```php
 use NPM\ServiceWebhookHandler\Handlers\GitHubHandler;
 
@@ -45,7 +46,8 @@ if ($handler->validate()) {
 }
 ```
 
-### [Travis CI][travis-ci-handler]
+### Travis CI
+[Docs][travis-ci-webhook-docs] - [`TravisCIHandler.php`][travis-ci-handler-php]
 ```php
 use NPM\ServiceWebhookHandler\Handlers\TravisCIHandler;
 
@@ -56,7 +58,8 @@ if ($handler->validate()) {
 }
 ```
 
-### [Telegram Login][telegram-login-handler]
+### Telegram Login
+[Docs][telegram-login-webhook-docs] - [`TelegramLoginHandler.php`][telegram-login-handler-php]
 ```php
 use NPM\ServiceWebhookHandler\Handlers\TelegramLoginHandler;
 
@@ -77,6 +80,9 @@ if ($handler->validate(json_encode($_GET))) {
 [license-badge]: https://img.shields.io/packagist/l/noplanman/service-webhook-handler.svg
 [composer]: https://getcomposer.org/ "Composer"
 
-[github-handler]: https://github.com/noplanman/service-webhook-handler/blob/master/src/Handlers/GitHubHandler.php
-[travis-ci-handler]: https://github.com/noplanman/service-webhook-handler/blob/master/src/Handlers/TravisCIHandler.php
-[telegram-login-handler]: https://github.com/noplanman/service-webhook-handler/blob/master/src/Handlers/TelegramLoginHandler.php
+[github-webhook-docs]: https://developer.github.com/webhooks/
+[github-handler-php]: https://github.com/noplanman/service-webhook-handler/blob/master/src/Handlers/GitHubHandler.php
+[travis-ci-webhook-docs]: https://docs.travis-ci.com/user/notifications/#Configuring-webhook-notifications
+[travis-ci-handler-php]: https://github.com/noplanman/service-webhook-handler/blob/master/src/Handlers/TravisCIHandler.php
+[telegram-login-webhook-docs]: https://core.telegram.org/widgets/login
+[telegram-login-handler-php]: https://github.com/noplanman/service-webhook-handler/blob/master/src/Handlers/TelegramLoginHandler.php
