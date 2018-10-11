@@ -2,7 +2,7 @@
     "name": "noplanman/service-webhook-handler",
     "type": "library",
     "description": "Library to handle Webhooks from various services.",
-    "keywords": ["services", "webhooks", "handler", "travis-ci", "github"],
+    "keywords": ["services", "webhooks", "handler", "travis-ci", "github", "gitlab"],
     "license": "MIT",
     "homepage": "https://github.com/noplanman/service-webhook-handler",
     "support": {
