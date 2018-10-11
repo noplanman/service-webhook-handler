@@ -22,9 +22,9 @@ class GitLabHandler extends WebhookHandler
     /**
      * GitLab constructor.
      *
-     * @param string $secret
+     * @param string|null $secret
      */
-    public function __construct(string $secret)
+    public function __construct(?string $secret = null)
     {
         $this->secret = $secret;
 
@@ -61,10 +61,16 @@ class GitLabHandler extends WebhookHandler
      */
     protected function getVitalHeaders(): array
     {
-        return [
-            'token' => 'HTTP_X_GITLAB_TOKEN',
+        $vital_headers = [
             'event' => 'HTTP_X_GITLAB_EVENT',
         ];
+
+        // The secret could be left out, so only enforce the check if it's here.
+        if (isset($_SERVER['HTTP_X_GITLAB_TOKEN'])) {
+            $vital_headers['token'] = 'HTTP_X_GITLAB_TOKEN';
+        }
+
+        return $vital_headers;
     }
 
     /**
@@ -72,6 +78,6 @@ class GitLabHandler extends WebhookHandler
      */
     protected function validateSignature(string $signature, string $payload): bool
     {
-        return $this->token === $this->secret;
+        return $this->token === null || $this->token === $this->secret;
     }
 }
