@@ -46,6 +46,18 @@ if ($handler->validate()) {
 }
 ```
 
+### GitLab
+[Docs][gitlab-webhook-docs] - [`GitLabHandler.php`][gitlab-handler-php]
+```php
+use NPM\ServiceWebhookHandler\Handlers\GitLabHandler;
+
+$handler = new GitLabHandler('webhook_secret');
+if ($handler->validate()) {
+    // All good, use the received data!
+    $data = $handler->getData();
+}
+```
+
 ### Travis CI
 [Docs][travis-ci-webhook-docs] - [`TravisCIHandler.php`][travis-ci-handler-php]
 ```php
@@ -82,6 +94,8 @@ if ($handler->validate(json_encode($_GET))) {
 
 [github-webhook-docs]: https://developer.github.com/webhooks/
 [github-handler-php]: https://github.com/noplanman/service-webhook-handler/blob/master/src/Handlers/GitHubHandler.php
+[gitlab-webhook-docs]: https://gitlab.com/gitlab-org/gitlab-ce/blob/master/doc/user/project/integrations/webhooks.md
+[gitlab-handler-php]: https://github.com/noplanman/service-webhook-handler/blob/master/src/Handlers/GitLabHandler.php
 [travis-ci-webhook-docs]: https://docs.travis-ci.com/user/notifications/#Configuring-webhook-notifications
 [travis-ci-handler-php]: https://github.com/noplanman/service-webhook-handler/blob/master/src/Handlers/TravisCIHandler.php
 [telegram-login-webhook-docs]: https://core.telegram.org/widgets/login
